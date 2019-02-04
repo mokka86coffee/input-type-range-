@@ -1,5 +1,5 @@
 import React from 'react';
-import './DblRange.scss';
+import './styles.scss';
 
 export default class DblRange extends React.Component {
 
