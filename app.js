@@ -1,6 +1,7 @@
 import React from 'react';
+import './DblRange.scss';
 
-export default class App extends React.Component {
+export default class DblRange extends React.Component {
 
     state = {
         rng1: 0,
