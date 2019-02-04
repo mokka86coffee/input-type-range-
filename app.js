@@ -12,13 +12,16 @@ export default class DblRange extends React.Component {
 
     handleRange = (e) => {
         const value = e.target.value;
-        const rngOtherIndex = `rng${e.target.dataset.rng == 1 ? 1 : 2}`;
-        
-        const maxRng = value > this.state[rngOtherIndex] ? value : this.state.maxRng;
-        const minRng = value < this.state[rngOtherIndex] ? value : this.state.minRng;
+        let { minRng, maxRng } = this.state;
+
+        const numbCurrent = e.target.dataset.rng;
+        const numbOther = numbCurrent == 1 ? 1 : 2;
+
+        if (value > this.state[numbOther]) { maxRng = value; }
+        else { minRng = value; }
         
         this.setState({
-            [`rng${e.target.dataset.rng}`]: value,
+            [`rng${numbCurrent}`]: value,
             maxRng,
             minRng
         });
@@ -27,7 +30,7 @@ export default class DblRange extends React.Component {
 
     render() {
         return (
-            <div className="range">
+            <div className="wrap-range">
                 <input 
                     data-rng={1}
                     onChange={this.handleRange}
@@ -42,6 +45,7 @@ export default class DblRange extends React.Component {
                     type="range" 
                     value={this.state.rng2} 
                 />
+                <div className="range-line"></div>
             </div>
         )
     }
