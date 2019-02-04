@@ -1,48 +1,33 @@
-.range {
+.wrap-range {
     position: relative;
-    height: 50px;
+    height: 150px;
     width: 200px;
 
     &::before {
         content: '';
         position: absolute;
-        top: -webkit-calc(50% - 10px);
-        top: -moz-calc(50% - 10px);
         top: calc(50% + 2px);
         left: 0;
         height: 4px;
         width: 100%;
         background-color: #00e1ff;
-        z-index: 0;
     }
 }
 
 
-
-
+  
 $inpRange: 'input[type=range]';
 $inpRangeFirst: '.input_range_first';
 $inpRangeSecond: '.input_range_second';
-$inpTypeRangeWidth: 100%; 
-$inpTypeRange_Indicator_BorderRadius: 100%;
-$inpTypeRange_Indicator_BgColor: #fff;
-$inpTypeRange_Indicator_Width: 30px;
-$inpTypeRange_Indicator_Height: 30px;
-$inpTypeRange_Indicator_Border: 1px solid #eee;
-$inpTypeRange_Indicator_BoxShadow: 1px 1px 10px #616161, 0px 0px 5px #acacac;
 
-
-
-/* Styles for Background __START__ */
-
+/* Styles for Standard View __START__ */
 #{$inpRange} {
     -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-    width: $inpTypeRangeWidth;; /* Specific width is required for Firefox. */
+    width: 100%; /* Specific width is required for Firefox. */
     background: transparent; /* Otherwise white in Chrome */
     position: absolute;
     top: 50%;
     left: 0;
-    z-index: 1;
   }
 
   #{$inpRange}::-webkit-slider-thumb {
@@ -54,7 +39,7 @@ $inpTypeRange_Indicator_BoxShadow: 1px 1px 10px #616161, 0px 0px 5px #acacac;
   }
   
   #{$inpRange}::-ms-track {
-    width: $inpTypeRangeWidth;
+    width: 100%;
     cursor: pointer;
   
     /* Hides the slider so custom styles can be added */
@@ -64,93 +49,71 @@ $inpTypeRange_Indicator_BoxShadow: 1px 1px 10px #616161, 0px 0px 5px #acacac;
   }
 
 /* Styles for Background __END__ */
-
 /*------------------------------------------*/
-  
+
+
 /* Styles for Indicator __START__ */
-  
+
+@mixin inpTypeRange_Indicator {
+  position: relative;
+  z-index: 1;
+  height: 30px;
+  width: 30px;
+  border: 100%;
+  border-radius: 100%;
+  background-color: #fff;
+  box-shadow: 1px 1px 10px #616161, 0px 0px 5px #acacac;
+  cursor: pointer;
+  @content;
+}
+
 /* Special styling for WebKit/Blink */
 #{$inpRange}::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: $inpTypeRange_Indicator_Border;
-    height: $inpTypeRange_Indicator_Height;
-    width: $inpTypeRange_Indicator_Width;
-    border-radius: $inpTypeRange_Indicator_BorderRadius;
-    background: $inpTypeRange_Indicator_BgColor;
-    cursor: pointer;
-    margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    box-shadow: $inpTypeRange_Indicator_BoxShadow; /* Add cool effects to your sliders! */
-  }
+  @include inpTypeRange_Indicator;
+  -webkit-appearance: none;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+}
   
-  /* All the same stuff for Firefox */
-  #{$inpRange}::-moz-range-thumb {
-    box-shadow: $inpTypeRange_Indicator_BoxShadow;
-    border: $inpTypeRange_Indicator_Border;
-    height: $inpTypeRange_Indicator_Height;
-    width: $inpTypeRange_Indicator_Width;
-    border-radius: $inpTypeRange_Indicator_BorderRadius;
-    background: $inpTypeRange_Indicator_BgColor;
-    cursor: pointer;
-  }
+/* All the same stuff for Firefox */
+#{$inpRange}::-moz-range-thumb {
+  @include inpTypeRange_Indicator;
+}
   
-  /* All the same stuff for IE */
-  #{$inpRange}::-ms-thumb {
-    box-shadow: $inpTypeRange_Indicator_BoxShadow;
-    border: $inpTypeRange_Indicator_Border;
-    height: $inpTypeRange_Indicator_Height;
-    width: $inpTypeRange_Indicator_Width;
-    border-radius: $inpTypeRange_Indicator_BorderRadius;
-    background: $inpTypeRange_Indicator_BgColor;
-    cursor: pointer;
-  }
-
+/* All the same stuff for IE */
+#{$inpRange}::-ms-thumb {
+  @include inpTypeRange_Indicator;
+}
 
 /* Styles for Indicator __END__ */
-
 /*------------------------------------------*/
   
 /* Styles for BgLine __START__ */
 
-  #{$inpRange}::-webkit-slider-runnable-track {
+  @mixin inpTypeRange_BgLine {
     width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px transparent;
     height: 0px;
     background: transparent;
-    border-radius: 1.3px;
-    border: 0.2px solid transparent;
+    cursor: pointer;
+    @content;
+}
+
+  #{$inpRange}::-webkit-slider-runnable-track {
+    @include inpTypeRange_BgLine;
   }
   
   #{$inpRange}:focus::-webkit-slider-runnable-track {
-    background: transparent;
+    background-color: transparent;
   }
   
   #{$inpRange}::-moz-range-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px transparent;
-    height: 0px;
-    background: transparent;
-    border-radius: 1.3px;
-    border: 0.2px solid transparent;
+    @include inpTypeRange_BgLine;
   }
   
   #{$inpRange}::-ms-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    background: transparent;
-    border-color: transparent;
-    border-width: 16px 0;
-    color: transparent;
+    @include inpTypeRange_BgLine;
   }
   #{$inpRange}::-ms-fill-lower {
     background: transparent;
-    border: 0.2px solid transparent;
-    border-radius: 2.6px;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px transparent;
     height: 0px;
   }
   #{$inpRange}:focus::-ms-fill-lower {
@@ -158,9 +121,6 @@ $inpTypeRange_Indicator_BoxShadow: 1px 1px 10px #616161, 0px 0px 5px #acacac;
   }
   #{$inpRange}::-ms-fill-upper {
     background: transparent;
-    border: 0.2px solid transparent;
-    border-radius: 2.6px;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px transparent;
     height: 0px;
   }
   #{$inpRange}:focus::-ms-fill-upper {
