@@ -34,7 +34,6 @@ export default class DblRange extends React.Component {
         }
         
     }
- 
 
     render() {
         console.log(this.state);
