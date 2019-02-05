@@ -1,24 +1,33 @@
-.wrap-range {
-    position: relative;
-    height: 150px;
-    width: 200px;
+.range-wrap {
+  position: relative;
+  height: 50px;
+  width: 200px;
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: calc(50% + 2px);
-        left: 0;
-        height: 4px;
-        width: 100%;
-        background-color: #00e1ff;
-    }
+  &::before {
+      content: '';
+      position: absolute;
+      top: calc(50% + 2px);
+      left: 0;
+      height: 4px;
+      width: 100%;
+      background-color: #e2e2e2;
+  }
+}
+
+.range-line {
+  position: absolute;
+  top: calc(50% + 2px);
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background-color: #00e1ff;
 }
 
 
   
 $inpRange: 'input[type=range]';
-$inpRangeFirst: '.input_range_first';
-$inpRangeSecond: '.input_range_second';
+$inpRangeFirst: '.input_range--first';
+$inpRangeSecond: '.input_range--second';
 
 /* Styles for Standard View __START__ */
 #{$inpRange} {
@@ -50,6 +59,7 @@ $inpRangeSecond: '.input_range_second';
 
 /* Styles for Standard View __END__ */
 /*------------------------------------------*/
+
 
 /* Styles for Indicator __START__ */
 
