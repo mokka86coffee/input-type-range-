@@ -15,17 +15,21 @@ export default class DblRange extends React.Component {
 
         const numbCurrent = e.target.dataset.rng;
         const numbOther = numbCurrent == 1 ? 1 : 2;
+        
+        const step = 1;
 
         if (value > this.state[numbOther]) { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
-                maxRng: value
+                maxRng: value * step,
+                minRng: this.state[numbOther] * step
             });
         }
         else { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
-                minRng: value
+                minRng: value * step,
+                maxRng: this.state[numbOther] * step
             }); 
         }
         
