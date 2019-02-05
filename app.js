@@ -14,7 +14,7 @@ export default class DblRange extends React.Component {
         const value = e.target.value;
 
         const numbCurrent = e.target.dataset.rng;
-        const numbOther = numbCurrent == 1 ? 1 : 2;
+        const numbOther = numbCurrent == 1 ? 2 : 1;
         
         const step = 1;
 
