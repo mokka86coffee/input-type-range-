@@ -7,7 +7,10 @@ export default class DblRange extends React.Component {
         rng1: 0,
         rng2: 100,
         minRng: 0,
-        maxRng: 100
+        maxRng: 100,
+
+        rangeStart: 0,
+        rangeEnd: 100
     }
 
     handleRange = (e) => {
@@ -22,38 +25,50 @@ export default class DblRange extends React.Component {
             this.setState({
                 [`rng${numbCurrent}`]: value,
                 minRng: this.state[`rng${numbOther}`],
-                maxRng: value * step
+                maxRng: value * step,
+                rangeStart: this.state[`rng${numbOther}`],
+                rangeEnd: value,
             });
         }
         else { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
                 minRng: value * step,
-                maxRng: this.state[`rng${numbOther}`]
+                maxRng: this.state[`rng${numbOther}`],
+                rangeStart: value,
+                rangeEnd: this.state[`rng${numbOther}`],
             }); 
         }
         
     }
+ 
 
     render() {
-        console.log(this.state);
+        const { rangeStart, rangeEnd } = this.state;
         return (
-            <div className="wrap-range">
+            <div className="range-wrap">
+                <div 
+                    style = {{
+                        left: `${rangeStart}%`,
+                        width: `${rangeEnd - rangeStart}%`
+                    }}
+                    className ="range-line"
+                >
+                </div>
                 <input 
                     data-rng={1}
                     onChange={this.handleRange}
-                    className="input_range_first"
+                    className="input_range--first"
                     type="range"
                     value={this.state.rng1} 
                 />
                 <input 
                     data-rng={2}
                     onChange={this.handleRange}
-                    className="input_range_second"
+                    className="input_range--second"
                     type="range" 
                     value={this.state.rng2} 
                 />
-                <div className="range-line"></div>
             </div>
         )
     }
