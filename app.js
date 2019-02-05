@@ -6,8 +6,8 @@ export default class DblRange extends React.Component {
     state = {
         rng1: 0,
         rng2: 100,
-        minRng: 100,
-        maxRng: 0
+        minRng: 0,
+        maxRng: 100
     }
 
     handleRange = (e) => {
