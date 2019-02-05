@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.scss';
+import './dblrange.scss';
 
 export default class DblRange extends React.Component {
 
@@ -11,25 +11,25 @@ export default class DblRange extends React.Component {
     }
 
     handleRange = (e) => {
-        const value = e.target.value;
+        const value = parseInt(e.target.value);
 
         const numbCurrent = e.target.dataset.rng;
         const numbOther = numbCurrent == 1 ? 2 : 1;
         
         const step = 1;
 
-        if (value > this.state[numbOther]) { 
+        if (value > this.state[`rng${numbOther}`]) { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
-                maxRng: value * step,
-                minRng: this.state[numbOther]
+                minRng: this.state[`rng${numbOther}`],
+                maxRng: value * step
             });
         }
         else { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
                 minRng: value * step,
-                maxRng: this.state[numbOther]
+                maxRng: this.state[`rng${numbOther}`]
             }); 
         }
         
@@ -37,6 +37,7 @@ export default class DblRange extends React.Component {
  
 
     render() {
+        console.log(this.state);
         return (
             <div className="wrap-range">
                 <input 
