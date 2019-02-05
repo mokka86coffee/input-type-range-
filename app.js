@@ -12,19 +12,23 @@ export default class DblRange extends React.Component {
 
     handleRange = (e) => {
         const value = e.target.value;
-        let { minRng, maxRng } = this.state;
 
         const numbCurrent = e.target.dataset.rng;
         const numbOther = numbCurrent == 1 ? 1 : 2;
 
-        if (value > this.state[numbOther]) { maxRng = value; }
-        else { minRng = value; }
+        if (value > this.state[numbOther]) { 
+            this.setState({
+                [`rng${numbCurrent}`]: value,
+                maxRng: value
+            });
+        }
+        else { 
+            this.setState({
+                [`rng${numbCurrent}`]: value,
+                minRng: value
+            }); 
+        }
         
-        this.setState({
-            [`rng${numbCurrent}`]: value,
-            maxRng,
-            minRng
-        });
     }
  
 
