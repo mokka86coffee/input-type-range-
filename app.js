@@ -22,14 +22,14 @@ export default class DblRange extends React.Component {
             this.setState({
                 [`rng${numbCurrent}`]: value,
                 maxRng: value * step,
-                minRng: this.state[numbOther] * step
+                minRng: this.state[numbOther]
             });
         }
         else { 
             this.setState({
                 [`rng${numbCurrent}`]: value,
                 minRng: value * step,
-                maxRng: this.state[numbOther] * step
+                maxRng: this.state[numbOther]
             }); 
         }
         
