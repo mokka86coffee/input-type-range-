@@ -18,10 +18,10 @@ export default class DblRange extends React.Component {
     }
 
     componentDidMount () {
-        const array = this.props.array || [1,6,100];
+        const array = this.props.array || [0.501,1.556,0.558,0.55101,55000];
         const minRng = Math.min(...array);
         const maxRng = Math.max(...array);
-        const step = Math.round(maxRng / 70);
+        const step = ((maxRng-minRng) / 90);
 
         this.setState({
             array,
@@ -32,12 +32,12 @@ export default class DblRange extends React.Component {
     }
 
     handleRange = (e) => {
+        let { step, array, minRng, maxRng, rangeLineStart, rangeLineEnd } = this.state;
         const value = parseInt(e.target.value);
 
         const numbCurrent = e.target.dataset.rng;
         const numbOther = numbCurrent == 1 ? 2 : 1;
         
-        let { step, array, minRng, maxRng, rangeLineStart, rangeLineEnd } = this.state;
 
         if (value > this.state[`rng${numbOther}`]) { 
             maxRng = value * step;
@@ -45,7 +45,7 @@ export default class DblRange extends React.Component {
             rangeLineEnd = value;
         }
         else { 
-            minRng = value * step;
+            minRng = value * step || Math.min(...array);
             rangeLineStart = value;
             rangeLineEnd = this.state[`rng${numbOther}`];
         }
@@ -69,9 +69,9 @@ export default class DblRange extends React.Component {
         return (
             <div className="range-wrap">
                 <ul className = "range-values">
-                    <li> Min. - {minRng}</li>
-                    <li> Max. - {maxRng}</li>
-                    <li> Step. - {step}</li>
+                    <li> Min. - {minRng.toFixed(3)}</li>
+                    <li> Max. - {maxRng.toFixed(3)}</li>
+                    <li> Step. - {step.toFixed(3)}</li>
                     <li> Range. - {range.toString()}</li>
                 </ul>
                 <div 
