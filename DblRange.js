@@ -10,8 +10,25 @@ export default class DblRange extends React.Component {
         maxRng: 0,
         step: 10,
 
-        rangeStart: 0,
-        rangeEnd: 100
+        array: [],
+        range: [],
+
+        rangeLineStart: 0,
+        rangeLineEnd: 100
+    }
+
+    componentDidMount () {
+        const array = this.props.array || [1,6,100];
+        const minRng = Math.min(...array);
+        const maxRng = Math.max(...array);
+        const step = Math.round(maxRng / 70);
+
+        this.setState({
+            array,
+            minRng,
+            maxRng,
+            step
+        });
     }
 
     handleRange = (e) => {
@@ -20,43 +37,47 @@ export default class DblRange extends React.Component {
         const numbCurrent = e.target.dataset.rng;
         const numbOther = numbCurrent == 1 ? 2 : 1;
         
-        const { step } = this.state;
+        let { step, array, minRng, maxRng, rangeLineStart, rangeLineEnd } = this.state;
 
         if (value > this.state[`rng${numbOther}`]) { 
-            this.setState({
-                [`rng${numbCurrent}`]: value,
-                minRng: this.state[`rng${numbOther}`] * step,
-                maxRng: value * step,
-                rangeStart: this.state[`rng${numbOther}`],
-                rangeEnd: value,
-            });
+            maxRng = value * step;
+            rangeLineStart = this.state[`rng${numbOther}`];
+            rangeLineEnd = value;
         }
         else { 
-            this.setState({
-                [`rng${numbCurrent}`]: value,
-                minRng: value * step,
-                maxRng: this.state[`rng${numbOther}`] * step,
-                rangeStart: value,
-                rangeEnd: this.state[`rng${numbOther}`],
-            }); 
+            minRng = value * step;
+            rangeLineStart = value;
+            rangeLineEnd = this.state[`rng${numbOther}`];
         }
-        
+
+        const range = array.filter(el=> el >= minRng && el <= maxRng);
+
+        this.setState({
+            [`rng${numbCurrent}`]: value,
+            minRng,
+            maxRng,
+            rangeLineStart,
+            rangeLineEnd,
+            range
+        });
+
     }
  
 
     render() {
-        const { rangeStart, rangeEnd, minRng, maxRng, step } = this.state;
+        const { rangeLineStart, rangeLineEnd, minRng, maxRng, step, range } = this.state;
         return (
             <div className="range-wrap">
                 <ul className = "range-values">
                     <li> Min. - {minRng}</li>
                     <li> Max. - {maxRng}</li>
                     <li> Step. - {step}</li>
+                    <li> Range. - {range.toString()}</li>
                 </ul>
                 <div 
                     style = {{
-                        left: `${rangeStart}%`,
-                        width: `${rangeEnd - rangeStart}%`
+                        left: `${rangeLineStart}%`,
+                        width: `${rangeLineEnd - rangeLineStart}%`
                     }}
                     className ="range-line"
                 >
